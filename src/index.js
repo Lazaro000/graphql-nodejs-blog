@@ -1,3 +1,1 @@
-import { printHello } from '#Lib/hello.js';
-
-printHello();
+console.log('Hello world!');
