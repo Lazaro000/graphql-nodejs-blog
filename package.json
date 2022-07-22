@@ -9,7 +9,10 @@
     "lint": "eslint src/**/*.js --fix",
     "prettier": "prettier --write .",
     "prepare": "husky install",
-    "postinstall": "npm run prepare"
+    "postinstall": "npm run prepare",
+    "docker:up": "docker-compose -p graphql-nodejs-blog up -d",
+    "docker:down": "docker-compose -p graphql-nodejs-blog down",
+    "docker:down-volumes": "docker-compose -p graphql-nodejs-blog down -v"
   },
   "devDependencies": {
     "eslint": "8.18.0",

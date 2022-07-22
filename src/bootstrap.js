@@ -1,6 +1,10 @@
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
+import { connectDB } from './db/index.js';
 import { schema } from './graphql/schema.js';
+import { config as dotenvConfig } from 'dotenv';
+
+dotenvConfig();
 
 export const bootstrap = async () => {
   const app = express();
@@ -14,6 +18,8 @@ export const bootstrap = async () => {
       graphiql: true,
     })
   );
+
+  connectDB();
 
   app.listen(process.env.PORT || 3000, () =>
     console.log(`Servidor levantado en el puerto ${process.env.PORT || 3000}`)
