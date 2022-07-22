@@ -2,6 +2,7 @@ import { PostSchema } from '#Models/Post.js';
 import { UserSchema } from '#Models/User.js';
 import { GraphQLString } from 'graphql';
 import { createJWTToken } from 'src/utils/auth.service.js';
+import { posts } from './queries.js';
 import { PostType } from './type.js';
 
 export const register = {
@@ -72,6 +73,8 @@ export const createPost = {
       body: args.body,
       authorId: verifiedUser._id,
     });
+
+    await newPost.save();
 
     return newPost;
   },
