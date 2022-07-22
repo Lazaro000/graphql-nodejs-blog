@@ -1,24 +1,30 @@
+import { CommentSchema } from '#Models/Comment.js';
 import { PostSchema } from '#Models/Post.js';
 import { UserSchema } from '#Models/User.js';
-import { GraphQLID, GraphQLObjectType, GraphQLString } from 'graphql';
+import {
+  GraphQLID,
+  GraphQLList,
+  GraphQLObjectType,
+  GraphQLString,
+} from 'graphql';
 
 export const UserType = new GraphQLObjectType({
   name: 'UserType',
   description: 'The user type',
-  fields: {
+  fields: () => ({
     id: { type: GraphQLID },
     username: { type: GraphQLString },
     email: { type: GraphQLString },
     displayName: { type: GraphQLString },
     createdAt: { type: GraphQLString },
     updatedAt: { type: GraphQLString },
-  },
+  }),
 });
 
 export const PostType = new GraphQLObjectType({
   name: 'PostType',
   description: 'The post type',
-  fields: {
+  fields: () => ({
     id: { type: GraphQLID },
     title: { type: GraphQLString },
     body: { type: GraphQLString },
@@ -30,7 +36,13 @@ export const PostType = new GraphQLObjectType({
         UserSchema.findById(parent.authorId);
       },
     },
-  },
+    comments: {
+      type: new GraphQLList(CommentType),
+      resolve: (parent) => {
+        return CommentSchema.find({ postId: parent.id });
+      },
+    },
+  }),
 });
 
 export const CommentType = new GraphQLObjectType({

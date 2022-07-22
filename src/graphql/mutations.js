@@ -1,8 +1,9 @@
+import { CommentSchema } from '#Models/Comment.js';
 import { PostSchema } from '#Models/Post.js';
 import { UserSchema } from '#Models/User.js';
 import { GraphQLID, GraphQLString } from 'graphql';
 import { createJWTToken } from 'src/utils/auth.service.js';
-import { PostType } from './types.js';
+import { CommentType, PostType } from './types.js';
 
 export const register = {
   type: GraphQLString,
@@ -117,5 +118,23 @@ export const deletePost = {
     if (!postDeleted) throw new Error('Post not found');
 
     return 'Post deleted';
+  },
+};
+
+export const addComment = {
+  type: CommentType,
+  description: 'Add a comment to a post',
+  args: {
+    comment: { type: GraphQLString },
+    postId: { type: GraphQLID },
+  },
+  resolve: async (parent, { comment, postId }, { verifiedUser }) => {
+    const newComment = new CommentSchema({
+      comment,
+      postId,
+      userId: verifiedUser._id,
+    });
+
+    return newComment.save();
   },
 };
