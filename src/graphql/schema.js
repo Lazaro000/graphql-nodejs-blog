@@ -7,6 +7,7 @@ import {
   updatePost,
   deletePost,
   addComment,
+  updateComment,
 } from './mutations.js';
 
 const QueryType = new GraphQLObjectType({
@@ -32,6 +33,7 @@ const MutationType = new GraphQLObjectType({
     updatePost,
     deletePost,
     addComment,
+    updateComment,
   },
 });
 

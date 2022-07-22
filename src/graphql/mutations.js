@@ -138,3 +138,29 @@ export const addComment = {
     return newComment.save();
   },
 };
+
+export const updateComment = {
+  type: CommentType,
+  description: 'Update a comment',
+  args: {
+    id: { type: GraphQLID },
+    comment: { type: GraphQLString },
+  },
+  resolve: async (parent, { id, comment }, { verifiedUser }) => {
+    if (!verifiedUser) throw new Error('Unauthorized');
+
+    const commentUpdated = await CommentSchema(
+      {
+        _id: id,
+        userId: verifiedUser._id,
+      },
+      {
+        comment,
+      }
+    );
+
+    if (!commentUpdated) throw new Error('Comment not found');
+
+    return commentUpdated;
+  },
+};
