@@ -1,6 +1,7 @@
 import { UserSchema } from '#Models/User.js';
 import { GraphQLString } from 'graphql';
 import { createJWTToken } from 'src/utils/auth.service.js';
+import { PostType } from './type.js';
 
 export const register = {
   type: GraphQLString,
@@ -52,5 +53,25 @@ export const login = {
     });
 
     return token;
+  },
+};
+
+export const createPost = {
+  type: PostType,
+  description: 'Create a new post',
+  args: {
+    title: { type: GraphQLString },
+    body: {
+      type: GraphQLString,
+    },
+  },
+  resolve: async (parent, args) => {
+    const newPost = new UserSchema({
+      title: args.title,
+      body: args.body,
+      authorId: '242342',
+    });
+
+    return newPost;
   },
 };
