@@ -1,3 +1,4 @@
+import { UserSchema } from '#Models/User.js';
 import { GraphQLID, GraphQLObjectType, GraphQLString } from 'graphql';
 
 export const UserType = new GraphQLObjectType({
@@ -20,6 +21,11 @@ export const PostType = new GraphQLObjectType({
     id: { type: GraphQLID },
     title: { type: GraphQLString },
     body: { type: GraphQLString },
-    authorId: { type: GraphQLID },
+    author: {
+      type: UserType,
+      resolve: (parent, args) => {
+        UserSchema.findById(parent.authorId);
+      },
+    },
   },
 });
