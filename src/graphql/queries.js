@@ -1,7 +1,7 @@
 import { PostSchema } from '#Models/Post.js';
 import { UserSchema } from '#Models/User.js';
 import { GraphQLID, GraphQLList, GraphQLString } from 'graphql';
-import { PostType, UserType } from './type.js';
+import { PostType, UserType } from './types.js';
 
 export const users = {
   type: GraphQLList(UserType),

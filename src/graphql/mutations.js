@@ -2,8 +2,7 @@ import { PostSchema } from '#Models/Post.js';
 import { UserSchema } from '#Models/User.js';
 import { GraphQLID, GraphQLString } from 'graphql';
 import { createJWTToken } from 'src/utils/auth.service.js';
-import { posts } from './queries.js';
-import { PostType } from './type.js';
+import { PostType } from './types.js';
 
 export const register = {
   type: GraphQLString,
