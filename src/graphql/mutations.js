@@ -1,5 +1,6 @@
 import { UserSchema } from '#Models/User.js';
 import { GraphQLString } from 'graphql';
+import { createJWTToken } from 'src/utils/auth.service.js';
 
 export const register = {
   type: GraphQLString,
@@ -22,8 +23,12 @@ export const register = {
 
     await newUser.save();
 
-    console.log(newUser);
+    const token = createJWTToken({
+      _id: newUser.id,
+      username: newUser.username,
+      email: newUser.email,
+    });
 
-    return 'new user created';
+    return token;
   },
 };
