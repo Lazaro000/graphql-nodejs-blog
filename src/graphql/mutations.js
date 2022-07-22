@@ -32,3 +32,25 @@ export const register = {
     return token;
   },
 };
+
+export const login = {
+  type: GraphQLString,
+  args: {
+    email: { type: GraphQLString },
+    password: { type: GraphQLString },
+  },
+  resolve: async (parent, args) => {
+    const user = UserSchema.findOne({ email: args.email }).select('+password');
+
+    if (!user || args.password !== (await user).password)
+      throw Error('Invalid Credentials');
+
+    const token = createJWTToken({
+      _id: user.id,
+      username: user.username,
+      email: user.email,
+    });
+
+    return token;
+  },
+};
