@@ -1,6 +1,6 @@
 import { PostSchema } from '#Models/Post.js';
 import { UserSchema } from '#Models/User.js';
-import { GraphQLString } from 'graphql';
+import { GraphQLID, GraphQLString } from 'graphql';
 import { createJWTToken } from 'src/utils/auth.service.js';
 import { posts } from './queries.js';
 import { PostType } from './type.js';
@@ -77,5 +77,26 @@ export const createPost = {
     await newPost.save();
 
     return newPost;
+  },
+};
+
+export const updatePost = {
+  type: PostType,
+  description: 'Update a post',
+  args: {
+    id: { type: GraphQLID },
+    title: { type: GraphQLString },
+    body: { type: GraphQLString },
+  },
+  resolve: async (parent, { id, title, body }, { verifiedUser }) => {
+    if (!verifiedUser) throw new Error('Unauthorized');
+
+    const updatePost = await PostSchema.findOneAndUpdate(
+      { _id: id, authorId: verifiedUser._id },
+      { title, body },
+      { new: true, runValidators: true }
+    );
+
+    return updatePost;
   },
 };
