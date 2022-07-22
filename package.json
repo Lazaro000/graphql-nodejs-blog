@@ -1,8 +1,8 @@
 {
-  "name": "node-template",
+  "name": "graphql-nodejs-blog",
   "version": "1.0.0",
   "type": "module",
-  "description": "Plantilla base para los proyectos desarrollados en Node.JS",
+  "description": "Blog API with JWT using Nodejs and Mongodb",
   "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
