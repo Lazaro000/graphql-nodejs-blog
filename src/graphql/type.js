@@ -10,7 +10,7 @@ export const UserType = new GraphQLObjectType({
     email: { type: GraphQLString },
     displayName: { type: GraphQLString },
     createdAt: { type: GraphQLString },
-    updateAt: { type: GraphQLString },
+    updatedAt: { type: GraphQLString },
   },
 });
 
@@ -21,6 +21,8 @@ export const PostType = new GraphQLObjectType({
     id: { type: GraphQLID },
     title: { type: GraphQLString },
     body: { type: GraphQLString },
+    createdAt: { type: GraphQLString },
+    updatedAt: { type: GraphQLString },
     author: {
       type: UserType,
       resolve: (parent, args) => {

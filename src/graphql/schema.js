@@ -1,5 +1,5 @@
 import { GraphQLObjectType, GraphQLSchema } from 'graphql';
-import { users, user, posts } from './queries.js';
+import { users, user, posts, post } from './queries.js';
 import { register, login, createPost } from './mutations.js';
 
 const QueryType = new GraphQLObjectType({
@@ -9,6 +9,7 @@ const QueryType = new GraphQLObjectType({
     users,
     user,
     posts,
+    post,
   },
 });
 

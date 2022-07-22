@@ -32,3 +32,18 @@ export const posts = {
     return posts;
   },
 };
+
+export const post = {
+  type: PostType,
+  description: 'Get a post by id',
+  args: {
+    id: {
+      type: GraphQLID,
+    },
+  },
+  resolve: async (parent, { id }) => {
+    const post = await PostSchema.findById(id);
+
+    return post;
+  },
+};
