@@ -164,3 +164,21 @@ export const updateComment = {
     return commentUpdated;
   },
 };
+
+const deletedComment = {
+  type: GraphQLString,
+  description: 'Delete  comment',
+  args: {
+    id: { type: GraphQLID },
+  },
+  resolve: async (parent, { id }, { verifiedUser }) => {
+    const commentDeleted = await CommentSchema.findByIdAndDelete({
+      _id: id,
+      userId: verifiedUser._id,
+    });
+
+    if (!commentDeleted) throw new Error('Comment not found');
+
+    return 'Comment deleted';
+  },
+};
