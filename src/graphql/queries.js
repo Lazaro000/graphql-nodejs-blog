@@ -1,7 +1,12 @@
-import { GraphQLString } from 'graphql';
+import { UserSchema } from '#Models/User.js';
+import { GraphQLList } from 'graphql';
+import { UserType } from './type.js';
 
-export const hello = {
-  type: GraphQLString,
-  description: 'Returns a string',
-  resolve: () => 'Hello World',
+export const users = {
+  type: GraphQLList(UserType),
+  resolve: async () => {
+    const users = await UserSchema.find();
+
+    return users;
+  },
 };
