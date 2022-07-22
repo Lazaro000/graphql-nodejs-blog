@@ -1,7 +1,8 @@
+import { CommentSchema } from '#Models/Comment.js';
 import { PostSchema } from '#Models/Post.js';
 import { UserSchema } from '#Models/User.js';
 import { GraphQLID, GraphQLList, GraphQLString } from 'graphql';
-import { PostType, UserType } from './types.js';
+import { PostType, UserType, CommentType } from './types.js';
 
 export const users = {
   type: GraphQLList(UserType),
@@ -45,5 +46,24 @@ export const post = {
     const post = await PostSchema.findById(id);
 
     return post;
+  },
+};
+
+export const comments = {
+  type: new GraphQLList(CommentType),
+  description: 'Get all comments',
+  resolve: () => {
+    return CommentSchema.find();
+  },
+};
+
+export const comment = {
+  type: CommentType,
+  description: 'Get a comment by id',
+  args: {
+    id: { type: GraphQLID },
+  },
+  resolve: async (parent, { id }) => {
+    return CommentSchema.findById(id);
   },
 };
